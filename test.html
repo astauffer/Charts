@@ -1,0 +1,48 @@
+<html>
+<head>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+  <script type="text/javascript" src="http://vega.github.io/vega/vega.min.js"></script>
+  <script type="text/javascript" src="https://npmcdn.com/arcgis-cedar/dist/cedar.js"></script>
+</head>
+<body>
+
+<div class="row">
+  <div class="col-lg-12" id="chart"></div>
+</div>
+
+<script>
+  var chart = new Cedar({"type": "bar"});
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+    "query": {
+      "groupByFieldsForStatistics": "Type",
+      "outStatistics": [{
+        "statisticType": "sum",
+        "onStatisticField": "Number_of",
+        "outStatisticFieldName": "Number_of_SUM"
+      }]
+    },
+    "mappings":{
+      "sort": "Number_of_SUM DESC",
+      "x": {"field":"Type","label":"Facility Use"},
+      "y": {"field":"Number_of_SUM","label":"Total Students"}
+    }
+  };
+
+  chart.tooltip = {
+    "title": "{Type}",
+    "content": "{Number_of_SUM} Students in {Type}"
+  }
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: "#chart"
+  });
+
+</script>
+</body>
+</html>

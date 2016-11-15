@@ -1,0 +1,43 @@
+<html>
+<head>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+  <script type="text/javascript" src="http://vega.github.io/vega/vega.min.js"></script>
+  <script type="text/javascript" src="https://npmcdn.com/arcgis-cedar/dist/cedar.js"></script>
+</head>
+<body>
+
+<div class="row">
+  <div class="col-lg-12" id="chart"></div>
+</div>
+
+<script>
+  var chart = new Cedar({"type": "bar"});
+
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"http://services6.arcgis.com/0p6i4J6xhQas4Unf/arcgis/rest/services/performance/FeatureServer/0",
+    "query": {
+      "where":"Performance_Measure='Population used for various measures '"
+    },
+    "mappings":{
+      "sort": "End_Date DESC",
+      "x": {"field":"Year","label":"Year"},
+      "y": {"field":"Performance","label":"Population"}
+    }
+  };
+  chart.tooltip = {
+    "title": "{Year}",
+    "content": "{Performance} total residents"
+  };
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: "#chart"
+  });
+
+</script>
+</body>
+</html>
