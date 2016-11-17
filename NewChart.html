@@ -1,0 +1,36 @@
+<html>
+<head>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+  <script type="text/javascript" src="https://vega.github.io/vega/vega.min.js"></script>
+  <script type="text/javascript" src="https://npmcdn.com/arcgis-cedar/dist/cedar.js"></script>
+</head>
+<body>
+
+<div class="row">
+  <div style="width: 300px; height: 300px" id="chart"></div>
+
+</div>
+
+<script>
+var chart = new Cedar({
+  "type":"scatter",
+  "dataset":{
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+    "query":{},
+    "mappings":{
+      "x": {"field":"Number_of","label":"Enrolment 2008"},
+      "y": {"field":"F_of_teach","label":"Fraction of Teachers"},
+      "color":{"field":"Type","label":"Facility Type"}
+    }
+  }
+});
+
+chart.show({
+  elementId: "#chart",
+  width: 800,
+  height: 400
+});
+
+</script>
+</body>
+</html>
