@@ -13,22 +13,28 @@
 </div>
 
 <script>
-  var chart = new Cedar({"type": "bar"});
+  var chart = new Cedar({"type": "time"});
   //create the dataset w/ mappings
   var dataset = {
     "url":"https://services6.arcgis.com/0p6i4J6xhQas4Unf/arcgis/rest/services/performance/FeatureServer/0",
     "query": {
-      "where":"Performance_Measure='Number of Visitors to Wake County  '"
+      "where": "Performance_Measure=' Miles of sidewalk '"
     },
-    "mappings":{
+    "mappings": {
       "sort": "End_Date DESC",
-      "x": {"field":"Year","label":"Year"},
-      "y": {"field":"Performance","label":"Total visitors"}
+      "time": {
+        "field": "Start_Date",
+        "label": "Year"
+      },
+    },
+    "value": {
+      "field": "Performance",
+      "label": "Miles of sidewalk"
     }
   };
   chart.tooltip = {
-    "title": "{Year}",
-    "content": "{Performance} total visitors to Raleigh NC"
+    "title": "",
+    "content": "{Performance} total miles of sidewalk"
   };
   //assign to the chart
   chart.dataset = dataset;
@@ -36,6 +42,7 @@
   chart.show({
     elementId: "#chart"
   });
+
 </script>
 </body>
 </html>
