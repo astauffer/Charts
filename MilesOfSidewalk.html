@@ -6,22 +6,34 @@
 </head>
 <body>
 
-<div class="row">
-  <div style="width: 800px; height: 500px" id="chart"></div>
-
-</div>
+  <div class="row">
+    <div style="width: 800px; height: 500px" id="chart"></div>
+  </div>
 
 <script type="text/javascript">
 var chart = new Cedar({
-  "type": "bar",
-  "dataset": {
-    "url":"https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0",
-    "query": {
-      "orderByFields": "TotPop DESC"
+  {
+    "type": "time",
+    "tooltip": {
+      "content": "{Performance} total miles of sidewalk",
+      "title": ""
     },
-    "mappings":{
-      "x": {"field":"STATE_NAME","label":"US State"},
-      "y": {"field":"TotPop","label":"Population"}
+    "dataset": {
+      "url": "https://services6.arcgis.com/0p6i4J6xhQas4Unf/arcgis/rest/services/performance/FeatureServer/0",
+      "query": {
+        "where": "Performance_Measure=' Miles of sidewalk '"
+      },
+      "mappings": {
+        "sort": "End_Date DESC",
+        "time": {
+          "field": "Start_Date",
+          "label": "Year"
+        },
+        "value": {
+          "field": "Performance",
+          "label": "Miles of sidewalk"
+        }
+      }
     }
   }
 }).show({
