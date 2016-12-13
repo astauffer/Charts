@@ -1,27 +1,41 @@
----
-title: Time Example
-layout: example.hbs
----
 
-<h1>Time Example</h1>
-<div id="cedar-tooltip" class="cedar-tooltip" style="display: none"></div>
-<div id="chart"></div>
+<html>
+<head>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+  <script type="text/javascript" src="https://vega.github.io/vega/vega.min.js"></script>
+  <script type="text/javascript" src="https://npmcdn.com/arcgis-cedar/dist/cedar.js"></script>
+</head>
+<body>
+
+<div class="row">
+  <div style="width: 300px; height: 300px" id="chart"></div>
+
+</div>
 
 <script>
-chart = new Cedar({
-  "type": "bar",
-  "dataset": {
-    "url":"https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0",
+  var chart = new Cedar({"type": "bar"});
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"https://services6.arcgis.com/0p6i4J6xhQas4Unf/arcgis/rest/services/performance/FeatureServer/0",
     "query": {
-      "orderByFields": "TotPop DESC"
+      "where":"Performance_Measure='Number of Visitors to Wake County  '"
     },
     "mappings":{
-      "x": {"field":"STATE_NAME","label":"US State"},
-      "y": {"field":"TotPop","label":"Population"}
+      "sort": "End_Date DESC",
+      "x": {"field":"Year","label":"Year"},
+      "y": {"field":"Performance","label":"Total visitors"}
     }
-  }
-}).show({
-  elementId: "#chart"
-});
-
+  };
+  chart.tooltip = {
+    "title": "{Year}",
+    "content": "{Performance} total visitors to Raleigh NC"
+  };
+  //assign to the chart
+  chart.dataset = dataset;
+  //show the chart
+  chart.show({
+    elementId: "#chart"
+  });
 </script>
+</body>
+</html>
