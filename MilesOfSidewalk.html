@@ -1,0 +1,42 @@
+<html>
+<head>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+  <script type="text/javascript" src="https://vega.github.io/vega/vega.min.js"></script>
+  <script type="text/javascript" src="https://npmcdn.com/arcgis-cedar/dist/cedar.js"></script>
+</head>
+<body>
+
+<div class="row">
+  <div style="width: 300px; height: 300px" id="chart"></div>
+
+</div>
+
+<script>
+{
+  "type": "time",
+  "tooltip": {
+    "content": "{Performance} total miles of sidewalk",
+    "title": ""
+  },
+  "dataset": {
+    "url": "https://services6.arcgis.com/0p6i4J6xhQas4Unf/arcgis/rest/services/performance/FeatureServer/0",
+    "query": {
+      "where": "Performance_Measure=' Miles of sidewalk '"
+    },
+    "mappings": {
+      "sort": "End_Date DESC",
+      "time": {
+        "field": "Start_Date",
+        "label": "Year"
+      },
+      "value": {
+        "field": "Performance",
+        "label": "Miles of sidewalk"
+      }
+    }
+  }
+}
+
+</script>
+</body>
+</html>
