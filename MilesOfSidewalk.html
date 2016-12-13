@@ -7,24 +7,49 @@
 <body>
 
 <div class="row">
-  <div style="width: 300px; height: 300px" id="chart"></div>
+  <div style="width: 450px; height: 500px" id="chart"></div>
 
 </div>
 
 <script>
-chart = new Cedar({
-  "type": "bar",
-  "dataset": {
-    "url":"https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0",
-    "query": {
-      "orderByFields": "TotPop DESC"
-    },
-    "mappings":{
-      "x": {"field":"STATE_NAME","label":"US State"},
-      "y": {"field":"TotPop","label":"Population"}
-    }
+//create a cedar chart
+var chart = new Cedar({"type": "bar-horizontal"});
+
+//create the dataset w/ mappings
+var dataset = {
+  "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+  "query": {
+    "groupByFieldsForStatistics": "Zip",
+    "outStatistics": [{
+      "statisticType": "sum",
+      "onStatisticField": "Number_of",
+      "outStatisticFieldName": "Number_of_SUM"
+    }]
+  },
+  "mappings":{
+    "x": {"field":"Zip","label":"ZIP Code"},
+    "y": {"field":"Number_of","label":"Total Students"}
   }
-}).show({
+};
+
+//assign to the chart
+chart.dataset = dataset;
+
+// fix placement of axes labels
+chart.override = {
+  "axes": [
+    {
+      "titleOffset": 25,
+      "title": "Total Number of Students"
+    },
+    {
+      "titleOffset": 50
+    }
+  ]
+};
+
+//show the chart
+chart.show({
   elementId: "#chart"
 });
 </script>
