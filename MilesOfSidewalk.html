@@ -12,33 +12,21 @@
 </div>
 
 <script>
-{
-  "type": "bar-horizontal",
+chart = new Cedar({
+  "type": "bar",
   "dataset": {
-    "url": "https://maps.raleighnc.gov/arcgis/rest/services/Parks/Greenway/MapServer/0",
+    "url":"https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0",
     "query": {
-      "groupByFieldsForStatistics": "MATERIAL",
-      "outStatistics": [
-        {
-          "statisticType": "SUM",
-          "onStatisticField": "LENGTH_FT",
-          "outStatisticFieldName": "LENGTH_FT_SUM"
-        }
-      ]
+      "orderByFields": "TotPop DESC"
     },
-    "mappings": {
-      "y": {
-        "field": "MATERIAL",
-        "label": "Material"
-      },
-      "x": {
-        "field": "LENGTH_FT_SUM",
-        "label": "Length (feet)"
-      }
+    "mappings":{
+      "x": {"field":"STATE_NAME","label":"US State"},
+      "y": {"field":"TotPop","label":"Population"}
     }
   }
-}
-
+}).show({
+  elementId: "#chart"
+});
 </script>
 </body>
 </html>
